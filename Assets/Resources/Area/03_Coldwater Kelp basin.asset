@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ae25c2ecc504f4f9be26ddce7bd554, type: 3}
+  m_Name: 03_Coldwater Kelp basin
+  m_EditorClassIdentifier: 
+  areaName: Coldwater Kelp basin
+  sceneName: Coldwater Kelp basin
+  loreText: 
+  previewImage: {fileID: 21300000, guid: 4f161452bcac9a5449e72b99adcbdd74, type: 3}
+  requiredBoatLevel: 2
+  availableFish:
+  - {fileID: 11400000, guid: 867e897e1d5b5e843b5492cee184813a, type: 2}
+  - {fileID: 11400000, guid: bf224a24444d6d247ab2d364cde51faf, type: 2}
+  - {fileID: 11400000, guid: dc8b7b4220fb837409af37ef9c30cc2b, type: 2}
+  - {fileID: 11400000, guid: e4d181d3d315ed84ea1ab07c0112dcd9, type: 2}
+  - {fileID: 11400000, guid: 69009c890d2d2e549893ce0eafbcf24c, type: 2}

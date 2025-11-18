@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348e7fd194e569f48ba04f5aea0db36a, type: 3}
+  m_Name: Wolf Eel
+  m_EditorClassIdentifier: 
+  fishName: Wolf Eel
+  icon: {fileID: 21300000, guid: 8a7444ea19d118941ba2c21dcdde3213, type: 3}
+  minWeight: 6
+  maxWeight: 18
+  pricePerKg: 15
+  rarity: 3
+  biteChance: 0.15
+  eatType: 2
+  preferredBaits:
+  - {fileID: 11400000, guid: 6d05a48fe6d16634d9fabd09e7f80d98, type: 2}
+  - {fileID: 11400000, guid: 2d936800006a1c34aa7b449be48cffe1, type: 2}
