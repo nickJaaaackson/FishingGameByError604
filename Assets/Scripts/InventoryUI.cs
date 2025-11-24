@@ -23,7 +23,6 @@ public class InventoryUI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
-            Debug.LogError("❌ SlotPrefab ไม่มี Button component");
             Toggle();
         }
     }

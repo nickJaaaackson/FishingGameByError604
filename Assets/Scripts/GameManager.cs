@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     
     public FishingAreaData[] allAreas;
 
-    private bool hasGivenStarterItem =false;
+    //private bool hasGivenStarterItem =false;
    
     [Header("Current Game State")]
     public FishingAreaData currentArea;
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
     public void SetCurrentArea(FishingAreaData area)
     {
         currentArea = area;
-        Debug.Log($"🌊 Current Area: {area.areaName}");
+        Debug.Log($" Current Area: {area.areaName}");
     }
     public void LockPlayerControll()
     {

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 public class Inventory : MonoBehaviour
 {
@@ -33,9 +34,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-       
-      
-
         if (items.Count < maxSlots)
         {
             items.Add(item);
@@ -43,6 +41,14 @@ public class Inventory : MonoBehaviour
         else
         {
             Debug.LogWarning(" Inventory full! cannot add item: " + item.itemName);
+        }
+    }
+
+   public void RemoveItem(Item item)
+    {
+        if(items.Contains(item))
+        {
+            items.Remove(item);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 public class FishMiniGame : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class FishMiniGame : MonoBehaviour
     bool isPlaying = false; 
     bool pause = false;
 
+  
     FishData currentFish;
     Player player;
     FishingSystem system;
@@ -58,10 +60,12 @@ public class FishMiniGame : MonoBehaviour
     #region Start MiniGame
     public void StartMiniGame(FishData fishData, Player playerRef, FishingSystem systemRef, float weight)
     {
+        
         currentFish = fishData;
         player = playerRef;
         system = systemRef;
         caughtWeight = weight;
+       
 
         ApplyDifficulty(fishData);
         ResizeHook();
@@ -78,27 +82,59 @@ public class FishMiniGame : MonoBehaviour
     #region Difficulty
     void ApplyDifficulty(FishData fishData)
     {
-        float rarityMultiplier = fishData.rarity switch
+        FishingRod rod = Player.Instance.fishingRod;
+
+        // =====================================================
+        // 1) ความ Rare → มีผลเฉพาะ "ความเร็วการเคลื่อนที่ของปลา"
+        // =====================================================
+        float rarityMoveMultiplier = fishData.rarity switch
         {
             Rarity.Common => 1.0f,
-            Rarity.Uncommon => 1.2f,
-            Rarity.Rare => 1.5f,
-            Rarity.Epic => 1.8f,
-            Rarity.Legendary => 2.2f,
+            Rarity.Uncommon => 1.1f,
+            Rarity.Rare => 1.25f,
+            Rarity.Epic => 1.4f,
+            Rarity.Legendary => 1.6f,
             _ => 1.0f
         };
 
-        float normalizedWeight = Mathf.InverseLerp(1f, 50f, caughtWeight);
-        difficulty = rarityMultiplier * (1 + normalizedWeight);
+        // =====================================================
+        // 2) น้ำหนักของปลา = ความยากจริง
+        // =====================================================
+        // Normalize 1–50 kg → 0 ถึง 1
+        float w = Mathf.InverseLerp(1f, 50f, caughtWeight);
 
-        smoothMotion = baseSmoothMotion / difficulty;
-        timerMultiplier = baseTimerMultiplier / difficulty;
+        // Mapping แบบโค้งนุ่ม ๆ → ไม่ให้พุ่งแรงเกิน
+        float weightDifficulty = Mathf.Lerp(0.15f, 0.85f, w);
 
+        float weightPullFactor = Mathf.Lerp(1f, 0.4f, w);
+          hookPower = baseHookPower * weightPullFactor;
+
+        // =====================================================
+        // ผลความยากสุดท้ายของการ "ลดหลอด"
+        // =====================================================
+        degradePower = weightDifficulty * rod.baseTensionSpeed;
+
+        // =====================================================
+        // ปรับ movement ของปลาโดยใช้ rarity
+        // =====================================================
+        minStayTime = Mathf.Lerp(0.5f, 0.15f, rarityMoveMultiplier - 1f);
+        maxStayTime = Mathf.Lerp(1.2f, 0.45f, rarityMoveMultiplier - 1f);
+
+        smoothMotion = baseSmoothMotion / rarityMoveMultiplier;
+        timerMultiplier = baseTimerMultiplier / rarityMoveMultiplier;
+
+        // =====================================================
+        // Hook settings ใช้ค่าปกติ + hookSize จากเบ็ด
+        // =====================================================
+        baseHookSize = rod.hookArea;
         hookPullPower = baseHookPullPower;
         hookPower = baseHookPower;
         gravityPower = baseGravityPower;
-        degradePower = baseDegradePower * difficulty;
+
+        Debug.Log("w=" + w + "  D=" + degradePower);
     }
+
+
     #endregion
 
     #region FishMovement
@@ -108,8 +144,8 @@ public class FishMiniGame : MonoBehaviour
 
         if (fishTimer <= 0f)
         {
-            fishTimer = Random.Range(minStayTime, maxStayTime) * timerMultiplier;
-            fishDestination = Random.value;
+            fishTimer = UnityEngine.Random.Range(minStayTime, maxStayTime) * timerMultiplier;
+            fishDestination = UnityEngine.Random.value;
         }
 
         fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, smoothMotion);

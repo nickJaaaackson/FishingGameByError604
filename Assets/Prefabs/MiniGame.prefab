@@ -62,7 +62,7 @@ MonoBehaviour:
   baseHookPullPower: 0.04
   baseHookPower: 0.2
   baseGravityPower: 0.009
-  baseDegradePower: 0.05
+  baseDegradePower: 0.2
   baseSmoothMotion: 1
   baseTimerMultiplier: 3
   minStayTime: 0.3

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     [SerializeField] SpriteRenderer spriteRenderer;
+    public FishingRod fishingRod;
     public float moveSpeed = 3f;
 
     [Header("State Flags")]
@@ -23,11 +24,12 @@ public class Player : MonoBehaviour
     public FishingSystem fishingSystem;
     [SerializeField] private BaitData emtyBait;
     public BaitData currentBait;
+   
 
     [SerializeField] private LayerMask interlactLayer;
     [SerializeField] private float interactRange;
 
-    public int money = 100;
+    public float money = 500;
 
     private bool canFish = false;
     private bool canMove = true;
@@ -66,6 +68,17 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             TryInterract();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            FishData[] allFish = Resources.LoadAll<FishData>("Fish");
+
+            FishData data = allFish[Random.Range(0, allFish.Length)];
+            float weight = Random.Range(1f, 10f);
+
+            Inventory.Instance.AddItem(new FishItem(data, weight));
+
+            Debug.Log($"🧪 Added Random Fish: {data.fishName} {weight}kg");
         }
     }
 

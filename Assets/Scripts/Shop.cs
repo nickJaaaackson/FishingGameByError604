@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
-using UnityEditor.Overlays;
 using UnityEngine;
+
 public class Shop : MonoBehaviour, IInteractable
 {
     public static Shop Instance;
 
-    [Header("UI Reference")]
+    [Header("Reference")]
     public ShopUI shopUI;
 
-    [Header("Loaded Data")]
-    public List<BaitData> baitList = new List<BaitData>();
+    [Header("Data List")]
+    public List<BaitData> baitList;
+
+    public void Interact(Player player)
+    {
+        OpenShop();
+    }
 
     private void Awake()
     {
@@ -18,53 +23,71 @@ public class Shop : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        LoadAllItems();
+        baitList = new List<BaitData>(Resources.LoadAll<BaitData>("Bait"));
         shopUI.InitTabs(this);
     }
 
-    public void Interact(Player player)
-    {
-        shopUI.Open();
-    }
-    //-----------------------------------
-    // โหลดรายการไอเท็มจาก Resources
-    //-----------------------------------
-    void LoadAllItems()
-    {
-        baitList = new List<BaitData>(Resources.LoadAll<BaitData>("Bait"));
-        Debug.Log("Loaded Baits : " + baitList.Count);
-    }
-
-    //-----------------------------------
-    // เรียกตอนกดแท็บ Shop
-    //-----------------------------------
+    //=============================================
     public void ShowShopTab()
     {
-        shopUI.tabShop.SetActive(true);
+        shopUI.ShowTab(TabType.Shop);
         shopUI.ShowBaitList(baitList);
     }
 
-    //-----------------------------------
-    // ซื้อไอเท็ม
-    //-----------------------------------
+    public void ShowSellTab()
+    {
+        shopUI.ShowTab(TabType.Sell);
+        shopUI.ShowSellList();
+    }
+
+    public void ShowUpgradeTab()
+    {
+        shopUI.ShowTab(TabType.Upgrade);
+        Debug.Log("TODO Upgrade");
+    }
+
+    public void ShowQuestTab()
+    {
+        shopUI.ShowTab(TabType.Quest);
+        Debug.Log("TODO Quest");
+    }
+
+    //=============================================
     public void BuyBait(BaitData bait)
     {
         int price = bait.price;
 
         if (Player.Instance.money < price)
         {
-            Debug.Log(" เงินไม่พอ!");
+            Debug.Log("เงินไม่พอ!");
             return;
         }
 
         Player.Instance.money -= price;
-
-        // เพิ่มของเข้ากระเป๋า
         Inventory.Instance.AddItem(new BaitItem(bait, 1));
-
-        Debug.Log($"ซื้อเหยื่อ {bait.baitName} ราคา {price} บาท");
-
-        // อัปเดต UI
         shopUI.RefreshMoney();
+    }
+
+    public void SellFish(FishItem fish)
+    {
+        float price = fish.GetSellPrice();
+        Player.Instance.money += Mathf.FloorToInt(price);
+
+        Inventory.Instance.RemoveItem(fish);
+
+        shopUI.ShowSellList();
+        shopUI.RefreshMoney();
+    }
+
+    //=============================================
+    public void OpenShop()
+    {
+        shopUI.Open();
+        ShowShopTab();
+    }
+
+    public void CloseShop()
+    {
+        shopUI.Close();
     }
 }

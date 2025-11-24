@@ -14,4 +14,8 @@ public class FishItem :Item
     {
         return fishData.icon; 
     }
+    public float GetSellPrice()
+    {
+        return fishData.pricePerKg * weight;    
+    }
 }

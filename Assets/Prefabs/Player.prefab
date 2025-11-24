@@ -258,6 +258,19 @@ MonoBehaviour:
   animator: {fileID: 1003152657630686158}
   rb: {fileID: 1635588931065364342}
   spriteRenderer: {fileID: 3581442266731188909}
+  fishingRod:
+    hookLevel: 1
+    hookMaxLevel: 5
+    baseHookArea: 0.3
+    hookAreaPerLevel: 0.2
+    lineLevel: 1
+    lineMaxLevel: 5
+    baseTensionSpeed: 1
+    tensionSpeedPerLevel: -0.1
+    hookBasePrice: 100
+    hookPriceIncrease: 100
+    lineBasePrice: 150
+    linePriceIncrease: 120
   moveSpeed: 3.5
   isWalking: 0
   isCasting: 0
@@ -271,7 +284,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   interactRange: 2
-  money: 100
+  money: 500
 --- !u!114 &-6940349086834631296
 MonoBehaviour:
   m_ObjectHideFlags: 0
