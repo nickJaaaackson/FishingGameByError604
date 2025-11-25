@@ -50,7 +50,6 @@ public class FishMiniGame : MonoBehaviour
     FishData currentFish;
     Player player;
     FishingSystem system;
-    float difficulty = 1f;
     float failTimer = 10f;
     private float caughtWeight;
     public float CaughtWeight => caughtWeight;

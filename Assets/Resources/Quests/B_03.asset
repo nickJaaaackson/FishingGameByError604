@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0e2160c6357da44bb0f9db7012c97d, type: 3}
+  m_Name: B_03
+  m_EditorClassIdentifier: 
+  questName: Heavyweight Haul
+  type: 1
+  description: "Only dedicated anglers manage hauls this heavy. Two hundred kilograms
+    is no joke \u2014 it separates hobbyists from true professionals. Bring it in,
+    and show everyone you can handle the sea\u2019s demands."
+  rewardMoney: 1000
+  targetFish: {fileID: 0}
+  targetAmount: 0
+  targetWeight: 200
+  targetRarity: 0
+  targetRarityAmount: 0

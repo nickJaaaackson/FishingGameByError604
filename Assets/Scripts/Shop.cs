@@ -49,7 +49,7 @@ public class Shop : MonoBehaviour, IInteractable
     public void ShowQuestTab()
     {
         shopUI.ShowTab(TabType.Quest);
-        Debug.Log("TODO Quest");
+        shopUI.ShowQuestList();
     }
 
     //=============================================

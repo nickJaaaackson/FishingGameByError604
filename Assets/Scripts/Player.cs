@@ -71,9 +71,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            FishData[] allFish = Resources.LoadAll<FishData>("Fish");
-
-            FishData data = allFish[Random.Range(0, allFish.Length)];
+            FishData data = Resources.Load<FishData>("Fish/Mackerel");
             float weight = Random.Range(1f, 10f);
 
             Inventory.Instance.AddItem(new FishItem(data, weight));

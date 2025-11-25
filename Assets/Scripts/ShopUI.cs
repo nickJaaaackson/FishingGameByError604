@@ -22,10 +22,12 @@ public class ShopUI : MonoBehaviour
 
     [Header("Content Parent")]
     public Transform shopListContainer;
+    public Transform questListContainer;
     public Transform sellListContainer;
 
     [Header("Prefabs")]
     public GameObject shopItemPrefab;
+    public GameObject questSlotPrefab;
     public GameObject fishItemPrefab;
 
     private Shop shop;
@@ -108,6 +110,22 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    public void ShowQuestList()
+    {
+        foreach(Transform c in questListContainer)
+            Destroy(c.gameObject);
+        var qs = QuestSystem.Instance;
+        List<QuestData> list = new List<QuestData>();
+        if(qs.currentA != null) list.Add(qs.currentA);
+        if(qs.currentB != null) list.Add(qs.currentB);
+        if(qs.currentC != null) list.Add(qs.currentC);
+        foreach(var q in list)
+        {
+            GameObject ui =
+                Instantiate(questSlotPrefab, questListContainer);
+            ui.GetComponent<QuestSlotUI>().Setup(q);
+        }
+    }
     //===============================================================
     public void ShowSellList()
     {
@@ -138,6 +156,7 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    
     //===============================================================
     public void Open() => shopWindow.SetActive(true);
     public void Close() => shopWindow.SetActive(false);
