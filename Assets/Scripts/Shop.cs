@@ -43,7 +43,7 @@ public class Shop : MonoBehaviour, IInteractable
     public void ShowUpgradeTab()
     {
         shopUI.ShowTab(TabType.Upgrade);
-        Debug.Log("TODO Upgrade");
+        shopUI.ShowUpgradeList();
     }
 
     public void ShowQuestTab()
@@ -59,12 +59,13 @@ public class Shop : MonoBehaviour, IInteractable
 
         if (Player.Instance.money < price)
         {
-            Debug.Log("เงินไม่พอ!");
+            AudioManager.Instance.PlaySFX("Error");
             return;
         }
 
         Player.Instance.money -= price;
         Inventory.Instance.AddItem(new BaitItem(bait, 1));
+        AudioManager.Instance.PlaySFX("Buy_Sell");
         shopUI.RefreshMoney();
     }
 
@@ -72,7 +73,7 @@ public class Shop : MonoBehaviour, IInteractable
     {
         float price = fish.GetSellPrice();
         Player.Instance.money += Mathf.FloorToInt(price);
-
+        AudioManager.Instance.PlaySFX("Buy_Sell");
         Inventory.Instance.RemoveItem(fish);
 
         shopUI.ShowSellList();

@@ -14,15 +14,39 @@ public class FishingSystem : MonoBehaviour
     [SerializeField] private float fishIconScale = 0.2f;
     [SerializeField] private float iconFloatHeight = 3f;
     [SerializeField] private float iconFloatDuration = 1.5f;
+
+   
     #endregion
 
     #region Private Variables
     private FishMiniGame activeMiniGame;
     private BaitData usingBait;          
     private FishData cachedFish;         
-    private float cachedWeight;          
+    private float cachedWeight;
+
+    // ================= BITE SYSTEM =================
+    private enum FishingPhase
+    {
+        Idle,
+        WaitingBite,
+        BiteWindow,
+        MiniGame
+    }
+
+    private FishingPhase phase = FishingPhase.Idle;
+
+    [SerializeField] private float minBiteDelay = 1f;
+    [SerializeField] private float maxBiteDelay = 5f;
+    [SerializeField] private float biteWindowTime = 2f;
+
+    private float biteDelayTimer;
+    private float biteWindowTimer;
     #endregion
 
+    private void Update()
+    {
+        HandleBiteProcess();
+    }
 
     #region MiniGame Starter
     public void BeginFishingMiniGame(Player player, BaitData bait)
@@ -67,17 +91,84 @@ public class FishingSystem : MonoBehaviour
         cachedFish = fishToCatch;
         cachedWeight = Random.Range(fishToCatch.minWeight, fishToCatch.maxWeight);
 
-        Camera overlayCam = GameObject.Find("MiniGameCamera").GetComponent<Camera>();
 
+        // ส่งปลาพร้อมน้ำหนัก
+        StartBiteProcess(player);
+
+     
+    }
+    private void StartBiteProcess(Player player)
+    {
+        phase = FishingPhase.WaitingBite;
+        biteDelayTimer = Random.Range(minBiteDelay, maxBiteDelay);
+
+        Debug.Log($"🎣 รอปลากิน... {biteDelayTimer:0.0} วิ");
+
+      
+        
+
+
+    }
+    private void HandleBiteProcess()
+    {
+        switch (phase)
+        {
+            case FishingPhase.WaitingBite:
+                biteDelayTimer -= Time.deltaTime;
+                if (biteDelayTimer <= 0)
+                {
+                    phase = FishingPhase.BiteWindow;
+                    biteWindowTimer = biteWindowTime;
+
+                    AudioManager.Instance.PlaySFX("FishBite");
+                }
+                break;
+
+            case FishingPhase.BiteWindow:
+                biteWindowTimer -= Time.deltaTime;
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("🎣 เกี่ยวทัน! เข้ามินิเกม");
+
+                    phase = FishingPhase.MiniGame;
+                    StartMiniGameFromPending();
+                }
+                else if (biteWindowTimer <= 0)
+                {
+                    Debug.Log("❌ กดไม่ทัน! ปลาหลุด");
+
+                    phase = FishingPhase.Idle;
+                    Player.Instance.UnfreezeAfterFishing();
+                }
+                break;
+
+            case FishingPhase.MiniGame:
+                // ให้ระบบเดิมทำงานใน MiniGame
+                break;
+        }
+    }
+    private void StartMiniGameFromPending()
+    {
+        if (cachedFish == null)
+        {
+            Debug.LogWarning("❌ cachedFish หาย");
+            Player.Instance.UnfreezeAfterFishing();
+            return;
+        }
+
+        Camera overlayCam = GameObject.Find("MiniGameCamera").GetComponent<Camera>();
         activeMiniGame = Instantiate(fishMiniGamePrefab);
+
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 10);
         activeMiniGame.transform.position = overlayCam.ScreenToWorldPoint(screenCenter);
 
-        // ส่งปลาพร้อมน้ำหนัก
-        activeMiniGame.StartMiniGame(cachedFish, player, this, cachedWeight);
+        activeMiniGame.StartMiniGame(cachedFish, Player.Instance, this, cachedWeight);
 
-        Debug.Log($"🎣 Start MiniGame: {cachedFish.fishName} | Weight {cachedWeight:F2} Kg");
+        Debug.Log($"🎮 MiniGame: {cachedFish.fishName} ({cachedWeight:F2}kg)");
     }
+
+
     #endregion
 
 

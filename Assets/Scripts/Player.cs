@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interlactLayer;
     [SerializeField] private float interactRange;
 
-    public float money = 500;
+    public float money = 2000;
 
     private bool canFish = false;
     private bool canMove = true;
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        fishingRod = GetComponent<FishingRod>();
         currentBait = emtyBait;
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -193,6 +194,8 @@ public class Player : MonoBehaviour
         animator.SetBool("isCasting", isCasting);
         animator.SetBool("isReeling", isReeling);
         animator.SetBool("isCatching", isCatching);
+        if(!isWalking && !isCasting && !isReeling &&!isCatching)
+        { animator.Play("Idle"); }
     }
 
     // ===============================
@@ -201,29 +204,36 @@ public class Player : MonoBehaviour
     public void StartCasting()
     {
         isFrozen = true;
-        isWalking = false;
+       ClearAnimFlags();
         isCasting = true;
-        isReeling = false;
-        isCatching = false;
+        Debug.Log("Cast");
+
     }
 
     public void StartReeling()
     {
-        isCasting = false;
+        ClearAnimFlags();
         isReeling = true;
+        Debug.Log("Reel");
     }
 
     public void StartCatching()
     {
-        isReeling = false;
+        ClearAnimFlags();
         isCatching = true;
+        Debug.Log("Catch");
     }
 
     public void UnfreezeAfterFishing()
     {
         isFrozen = false;
+        ClearAnimFlags();
+    }
+    public void ClearAnimFlags()
+    {
         isCasting = false;
         isReeling = false;
         isCatching = false;
+        isWalking =false;
     }
 }

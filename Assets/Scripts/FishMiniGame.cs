@@ -102,7 +102,7 @@ public class FishMiniGame : MonoBehaviour
         // Normalize 1–50 kg → 0 ถึง 1
         float w = Mathf.InverseLerp(1f, 50f, caughtWeight);
 
-        // Mapping แบบโค้งนุ่ม ๆ → ไม่ให้พุ่งแรงเกิน
+       
         float weightDifficulty = Mathf.Lerp(0.15f, 0.85f, w);
 
         float weightPullFactor = Mathf.Lerp(1f, 0.4f, w);
@@ -111,7 +111,8 @@ public class FishMiniGame : MonoBehaviour
         // =====================================================
         // ผลความยากสุดท้ายของการ "ลดหลอด"
         // =====================================================
-        degradePower = weightDifficulty * rod.baseTensionSpeed;
+        degradePower = weightDifficulty * rod.tensionSpeed;
+        degradePower = Mathf.Clamp(degradePower, 0.05f, 0.20f);
 
         // =====================================================
         // ปรับ movement ของปลาโดยใช้ rarity
@@ -167,16 +168,34 @@ public class FishMiniGame : MonoBehaviour
 
         hookPullVelocity -= gravityPower * Time.deltaTime;
 
-        if (hookPosition - baseHookSize / 2 <= 0f && hookPullVelocity < 0f)
-            hookPullVelocity = 0f;
+     
+        float bottom = baseHookSize / 2f;
+        if (hookPosition <= bottom)
+        {
+            hookPosition = bottom;
+            if (hookPullVelocity < 0f)
+            {
+                hookPullVelocity = 0f;
+            }
+        }
 
-        if (hookPosition + baseHookSize / 2 >= 1f && hookPullVelocity > 0f)
-            hookPullVelocity = 0f;
+        // ขอบบน
+        float top = 1f - baseHookSize / 2f;
+        if (hookPosition >= top)
+        {
+            hookPosition = top;
+            if(hookPullVelocity > 0f)
+            {
+                hookPullVelocity = 0f;
+            }
+        }
+
 
         hookPosition += hookPullVelocity;
         hookPosition = Mathf.Clamp(hookPosition, baseHookSize / 2, 1 - baseHookSize / 2);
 
         hook.position = Vector3.Lerp(bottomPivot.position, topPivot.position, hookPosition);
+        Debug.Log($"Pos  {hookPosition}, Vel={hookPullVelocity}, gravity={gravityPower}");
     }
     #endregion
 

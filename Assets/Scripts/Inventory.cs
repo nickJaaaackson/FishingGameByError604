@@ -70,4 +70,12 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public bool UpgradeBag()
+    {
+        if (maxSlots >= 30) return false; // max 30
+        maxSlots += 10;
+        return true;
+    }
+
 }

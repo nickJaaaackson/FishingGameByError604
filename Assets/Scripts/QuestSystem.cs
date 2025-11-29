@@ -5,7 +5,7 @@ public class QuestSystem : MonoBehaviour
 {
     #region Instance
     public static QuestSystem Instance;
-    private void Awake() => Instance = this;
+   
     #endregion
 
     #region Queues
@@ -22,7 +22,17 @@ public class QuestSystem : MonoBehaviour
     [Header("Active Quests (Accepted by Player)")]
     public List<QuestData> activeQuests = new();
     #endregion
-
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void Start()
     {
         LoadAllQuests();

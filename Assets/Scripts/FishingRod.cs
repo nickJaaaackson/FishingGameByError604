@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class FishingRod
+public class FishingRod : MonoBehaviour
 {
     [Header("Hook Upgrade")]
     public int hookLevel = 1;

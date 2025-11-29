@@ -73,7 +73,7 @@ public class FishingAreaUI : MonoBehaviour
 
         selectedArea = area;
 
-        if (currentBoat.boatLevel < area.requiredBoatLevel)
+        if (currentBoat.currentLevel < area.requiredBoatLevel)
         {
             warnningText.text = $"This Level {area.requiredBoatLevel} required";
             warnningPanel.SetActive(true);

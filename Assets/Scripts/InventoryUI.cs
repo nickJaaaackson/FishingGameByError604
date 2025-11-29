@@ -50,7 +50,7 @@ public class InventoryUI : MonoBehaviour
 
         int maxUnlockedSlots = Inventory.Instance.maxSlots; // เช่น 10 ช่องแรกใช้งานได้
 
-        for (int i = 0; i < 30; i++)  // 30 ช่อง UI เต็ม
+        for (int i = 0; i < 30; i++)   
         {
             GameObject slot = Instantiate(slotPrefab, slotParent);
 

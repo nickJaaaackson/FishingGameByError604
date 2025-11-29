@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 8473807972084469566}
   - component: {fileID: -6940349086834631296}
   - component: {fileID: 2868581232974083136}
+  - component: {fileID: 4549067628272797715}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -258,19 +259,7 @@ MonoBehaviour:
   animator: {fileID: 1003152657630686158}
   rb: {fileID: 1635588931065364342}
   spriteRenderer: {fileID: 3581442266731188909}
-  fishingRod:
-    hookLevel: 1
-    hookMaxLevel: 5
-    baseHookArea: 0.3
-    hookAreaPerLevel: 0.2
-    lineLevel: 1
-    lineMaxLevel: 5
-    baseTensionSpeed: 1
-    tensionSpeedPerLevel: -0.1
-    hookBasePrice: 100
-    hookPriceIncrease: 100
-    lineBasePrice: 150
-    linePriceIncrease: 120
+  fishingRod: {fileID: 0}
   moveSpeed: 3.5
   isWalking: 0
   isCasting: 0
@@ -284,7 +273,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   interactRange: 2
-  money: 500
+  money: 2000
 --- !u!114 &-6940349086834631296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,3 +306,27 @@ MonoBehaviour:
   fishIconScale: 0.2
   iconFloatHeight: 3
   iconFloatDuration: 1.5
+--- !u!114 &4549067628272797715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6991829103828683046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eddc12e3ec8885408eaeddbe0e653be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hookLevel: 1
+  hookMaxLevel: 5
+  baseHookArea: 0.2
+  hookAreaPerLevel: 0.1
+  lineLevel: 1
+  lineMaxLevel: 5
+  baseTensionSpeed: 1
+  tensionSpeedPerLevel: -0.1
+  hookBasePrice: 100
+  hookPriceIncrease: 100
+  lineBasePrice: 150
+  linePriceIncrease: 120

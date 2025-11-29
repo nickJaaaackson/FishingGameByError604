@@ -16,7 +16,7 @@ public class FishingArea : MonoBehaviour
         Debug.Log("▶ Load area : " + area.areaName);
 
         SceneManager.LoadScene(area.sceneName);
-
+        AudioManager.Instance.PlaySFX("travel",0.4f);
         // ส่งข้อมูลไป GameManager หลังโหลดเสร็จ
         SceneManager.sceneLoaded += OnSceneLoaded;
     }

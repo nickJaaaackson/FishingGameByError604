@@ -2,9 +2,11 @@
 
 public class Boat : MonoBehaviour, IInteractable
 {
-    
+
     [Header("Boat Settings")]
-    public int boatLevel = 1;                
+
+    public int maxLevel = 3;
+    public int currentLevel = 1;  
     public float interactDistance = 2f;       
 
     [Header("References")]
@@ -17,13 +19,6 @@ public class Boat : MonoBehaviour, IInteractable
     }
 
 
-    private void Start()
-    {
-        //if(fishingAreaUI == null)
-        //{
-        //    fishingAreaUI = FindAnyObjectByType<FishingAreaUI>();
-        //}
-    }
     void Update()
     {
         if (fishingAreaUI == null)
@@ -31,29 +26,19 @@ public class Boat : MonoBehaviour, IInteractable
             fishingAreaUI = FindAnyObjectByType<FishingAreaUI>();
         }
     }
+    public int  GetUpgradePrice()
+    {
+        return 1000 * currentLevel;
+    }
 
-   
-    
+    public bool UpgradeBoat()
+    {
+        if (currentLevel >= maxLevel) return false;
+        currentLevel++;
+        return true;
+    }
 
-    
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        playerInRange = true;
-    //        player = collision.GetComponent<Player>();
-    //        Debug.Log("🎣 Player entered boat area");
-    //    }
-    //}
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        playerInRange = false;
-    //        player = null;
-    //        Debug.Log("👋 Player left boat area");
-    //    }
-    //}
-    
+
+
 }
