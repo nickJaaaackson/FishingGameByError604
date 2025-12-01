@@ -17,7 +17,7 @@ public class FishMiniGame : MonoBehaviour
     [SerializeField] float baseHookPullPower = 0.04f;
     [SerializeField] float baseHookPower = 0.7f;
     [SerializeField] float baseGravityPower = 0.01f;
-    
+
 
     [Header("Fish Movement Settings")]
     [SerializeField] float baseSmoothMotion = 1;
@@ -42,10 +42,10 @@ public class FishMiniGame : MonoBehaviour
     float smoothMotion;
     float timerMultiplier;
 
-    bool isPlaying = false; 
+    bool isPlaying = false;
     bool pause = false;
 
-  
+
     FishData currentFish;
     Player player;
     FishingSystem system;
@@ -58,12 +58,12 @@ public class FishMiniGame : MonoBehaviour
     #region Start MiniGame
     public void StartMiniGame(FishData fishData, Player playerRef, FishingSystem systemRef, float weight)
     {
-        
+
         currentFish = fishData;
         player = playerRef;
         system = systemRef;
         caughtWeight = weight;
-       
+
 
         ApplyDifficulty(fishData);
         ResizeHook();
@@ -82,7 +82,7 @@ public class FishMiniGame : MonoBehaviour
     {
         FishingRod rod = Player.Instance.fishingRod;
 
-       
+
         float rarityMoveMultiplier = fishData.rarity switch
         {
             Rarity.Common => 1.0f,
@@ -93,14 +93,14 @@ public class FishMiniGame : MonoBehaviour
             _ => 1.0f
         };
 
-        
+
         float w = Mathf.InverseLerp(1f, 50f, caughtWeight);
 
-       
+
         float weightDifficulty = Mathf.Lerp(0.15f, 0.85f, w);
 
         float weightPullFactor = Mathf.Lerp(1f, 0.4f, w);
-          hookPower = baseHookPower * weightPullFactor;
+        hookPower = baseHookPower * weightPullFactor;
 
         degradePower = weightDifficulty * rod.tensionSpeed;
         degradePower = Mathf.Clamp(degradePower, 0.05f, 0.20f);
@@ -109,11 +109,11 @@ public class FishMiniGame : MonoBehaviour
         maxStayTime = Mathf.Lerp(1.2f, 0.45f, rarityMoveMultiplier - 1f);
 
         float weatherDebuffMultiplier = 1f;
-        if(GameManager.Instance.isStorm)
+        if (GameManager.Instance.isStorm)
         {
             weatherDebuffMultiplier = 1.12f;
         }
-        smoothMotion = (baseSmoothMotion / rarityMoveMultiplier)/weatherDebuffMultiplier;
+        smoothMotion = (baseSmoothMotion / rarityMoveMultiplier) / weatherDebuffMultiplier;
         timerMultiplier = (baseSmoothMotion / rarityMoveMultiplier) / weatherDebuffMultiplier;
 
 
@@ -159,7 +159,7 @@ public class FishMiniGame : MonoBehaviour
 
         hookPullVelocity -= gravityPower * Time.deltaTime;
 
-     
+
         float bottom = baseHookSize / 2f;
         if (hookPosition <= bottom)
         {
@@ -170,27 +170,29 @@ public class FishMiniGame : MonoBehaviour
             }
         }
 
-       
+
         float top = 1f - baseHookSize / 2f;
         if (hookPosition >= top)
         {
             hookPosition = top;
-            if(hookPullVelocity > 0f)
+            if (hookPullVelocity > 0f)
             {
                 hookPullVelocity = 0f;
             }
         }
 
-
-        hookPosition += hookPullVelocity;
+        hookPullVelocity = Mathf .Clamp(hookPullVelocity, -0.015f, 0.015f);
+        
+        hookPosition += hookPullVelocity ;
         hookPosition = Mathf.Clamp(hookPosition, baseHookSize / 2, 1 - baseHookSize / 2);
 
         hook.position = Vector3.Lerp(bottomPivot.position, topPivot.position, hookPosition);
-        
+
     }
     #endregion
 
     #region Update Loop
+
     void Update()
     {
         if (!isPlaying) return;
@@ -218,23 +220,23 @@ public class FishMiniGame : MonoBehaviour
         else
             hookProgress -= degradePower * Time.deltaTime;
 
-       
+
         if (hookProgress <= 0f)
         {
             failTimer -= Time.deltaTime;
             if (failTimer <= 0f)
             {
                 Lose();
-                return; 
+                return;
             }
         }
         else failTimer = 2f;
 
-      
+
         if (hookProgress >= 1f)
         {
             Win();
-            return; 
+            return;
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
@@ -243,7 +245,7 @@ public class FishMiniGame : MonoBehaviour
 
     void Win()
     {
-        if (!isPlaying) return;  
+        if (!isPlaying) return;
 
         isPlaying = false;
         pause = true;
@@ -251,14 +253,14 @@ public class FishMiniGame : MonoBehaviour
         player.StartCatching();
         player.UnfreezeAfterFishing();
 
-        system.SpawnFishIcon(player.transform.position,currentFish.icon);
+        system.SpawnFishIcon(player.transform.position, currentFish.icon);
         HUDManager.Instance.RefreshQuests();
         system.OnMiniGameResult(true);
     }
 
     void Lose()
     {
-        if (!isPlaying) return; 
+        if (!isPlaying) return;
 
         isPlaying = false;
         pause = true;
