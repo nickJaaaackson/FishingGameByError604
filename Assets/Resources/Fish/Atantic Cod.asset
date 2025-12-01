@@ -16,9 +16,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8825bbfffeb033047aee935fbf5559be, type: 3}
   minWeight: 5
   maxWeight: 20
-  pricePerKg: 30
+  pricePerKg: 1
   rarity: 0
   biteChance: 0.65
   eatType: 1
   preferredBaits:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 2d936800006a1c34aa7b449be48cffe1, type: 2}
+  - {fileID: 11400000, guid: 6d05a48fe6d16634d9fabd09e7f80d98, type: 2}

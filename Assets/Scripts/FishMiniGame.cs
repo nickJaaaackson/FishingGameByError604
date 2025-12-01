@@ -17,11 +17,10 @@ public class FishMiniGame : MonoBehaviour
     [SerializeField] float baseHookPullPower = 0.04f;
     [SerializeField] float baseHookPower = 0.7f;
     [SerializeField] float baseGravityPower = 0.01f;
-    [SerializeField] float baseDegradePower = 0.05f;
+    
 
     [Header("Fish Movement Settings")]
-    [SerializeField] float baseSmoothMotion = 1f;
-    [SerializeField] float baseTimerMultiplier = 2f;
+    [SerializeField] float baseSmoothMotion = 1;
     [SerializeField] float minStayTime = 0.3f;
     [SerializeField] float maxStayTime = 2f;
     #endregion
@@ -50,7 +49,7 @@ public class FishMiniGame : MonoBehaviour
     FishData currentFish;
     Player player;
     FishingSystem system;
-    float failTimer = 10f;
+    float failTimer = 2f;
     private float caughtWeight;
     public float CaughtWeight => caughtWeight;
     #endregion
@@ -83,9 +82,7 @@ public class FishMiniGame : MonoBehaviour
     {
         FishingRod rod = Player.Instance.fishingRod;
 
-        // =====================================================
-        // 1) ความ Rare → มีผลเฉพาะ "ความเร็วการเคลื่อนที่ของปลา"
-        // =====================================================
+       
         float rarityMoveMultiplier = fishData.rarity switch
         {
             Rarity.Common => 1.0f,
@@ -96,10 +93,7 @@ public class FishMiniGame : MonoBehaviour
             _ => 1.0f
         };
 
-        // =====================================================
-        // 2) น้ำหนักของปลา = ความยากจริง
-        // =====================================================
-        // Normalize 1–50 kg → 0 ถึง 1
+        
         float w = Mathf.InverseLerp(1f, 50f, caughtWeight);
 
        
@@ -108,24 +102,21 @@ public class FishMiniGame : MonoBehaviour
         float weightPullFactor = Mathf.Lerp(1f, 0.4f, w);
           hookPower = baseHookPower * weightPullFactor;
 
-        // =====================================================
-        // ผลความยากสุดท้ายของการ "ลดหลอด"
-        // =====================================================
         degradePower = weightDifficulty * rod.tensionSpeed;
         degradePower = Mathf.Clamp(degradePower, 0.05f, 0.20f);
 
-        // =====================================================
-        // ปรับ movement ของปลาโดยใช้ rarity
-        // =====================================================
         minStayTime = Mathf.Lerp(0.5f, 0.15f, rarityMoveMultiplier - 1f);
         maxStayTime = Mathf.Lerp(1.2f, 0.45f, rarityMoveMultiplier - 1f);
 
-        smoothMotion = baseSmoothMotion / rarityMoveMultiplier;
-        timerMultiplier = baseTimerMultiplier / rarityMoveMultiplier;
+        float weatherDebuffMultiplier = 1f;
+        if(GameManager.Instance.isStorm)
+        {
+            weatherDebuffMultiplier = 1.12f;
+        }
+        smoothMotion = (baseSmoothMotion / rarityMoveMultiplier)/weatherDebuffMultiplier;
+        timerMultiplier = (baseSmoothMotion / rarityMoveMultiplier) / weatherDebuffMultiplier;
 
-        // =====================================================
-        // Hook settings ใช้ค่าปกติ + hookSize จากเบ็ด
-        // =====================================================
+
         baseHookSize = rod.hookArea;
         hookPullPower = baseHookPullPower;
         hookPower = baseHookPower;
@@ -179,7 +170,7 @@ public class FishMiniGame : MonoBehaviour
             }
         }
 
-        // ขอบบน
+       
         float top = 1f - baseHookSize / 2f;
         if (hookPosition >= top)
         {
@@ -195,7 +186,7 @@ public class FishMiniGame : MonoBehaviour
         hookPosition = Mathf.Clamp(hookPosition, baseHookSize / 2, 1 - baseHookSize / 2);
 
         hook.position = Vector3.Lerp(bottomPivot.position, topPivot.position, hookPosition);
-        Debug.Log($"Pos  {hookPosition}, Vel={hookPullVelocity}, gravity={gravityPower}");
+        
     }
     #endregion
 
@@ -227,7 +218,7 @@ public class FishMiniGame : MonoBehaviour
         else
             hookProgress -= degradePower * Time.deltaTime;
 
-        // Fail
+       
         if (hookProgress <= 0f)
         {
             failTimer -= Time.deltaTime;
@@ -237,9 +228,9 @@ public class FishMiniGame : MonoBehaviour
                 return; 
             }
         }
-        else failTimer = 10f;
+        else failTimer = 2f;
 
-        // Success
+      
         if (hookProgress >= 1f)
         {
             Win();
@@ -252,7 +243,7 @@ public class FishMiniGame : MonoBehaviour
 
     void Win()
     {
-        if (!isPlaying) return; // 
+        if (!isPlaying) return;  
 
         isPlaying = false;
         pause = true;
@@ -261,6 +252,7 @@ public class FishMiniGame : MonoBehaviour
         player.UnfreezeAfterFishing();
 
         system.SpawnFishIcon(player.transform.position,currentFish.icon);
+        HUDManager.Instance.RefreshQuests();
         system.OnMiniGameResult(true);
     }
 

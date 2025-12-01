@@ -15,7 +15,7 @@ public class ShopUI : MonoBehaviour
 {
     [Header("Shop Window")]
     public GameObject shopWindow;
-    public TextMeshProUGUI moneyText;
+   
 
     [Header("Tabs Setup")]
     public List<TabButton> tabs;
@@ -45,7 +45,7 @@ public class ShopUI : MonoBehaviour
             t.button.onClick.AddListener(() => shopUI_OnTabClicked(captured));
         }
 
-        RefreshMoney();
+        
     }
 
     private void shopUI_OnTabClicked(TabType tab)
@@ -82,10 +82,7 @@ public class ShopUI : MonoBehaviour
     }
 
     //===============================================================
-    public void RefreshMoney()
-    {
-        moneyText.text = "Money: " + Player.Instance.money;
-    }
+   
 
     //===============================================================
     public void ShowBaitList(List<BaitData> baitList)
@@ -139,12 +136,12 @@ public class ShopUI : MonoBehaviour
                int price = boat.GetUpgradePrice();
                 if (p.money >= boat.GetUpgradePrice() && boat.UpgradeBoat())
                 {
-                    p.money -= price;
+                    p.SpendMoney(price);
                     AudioManager.Instance.PlaySFX("Buy_Sell");
-                    RefreshMoney();
                     ShowUpgradeList();
+                   
                 }
-                else { AudioManager.Instance.PlaySFX("Error"); }
+                else { AudioManager.Instance.PlaySFX("Error",2f); }
                
             }
         );
@@ -158,12 +155,11 @@ public class ShopUI : MonoBehaviour
             {
                 if (p.money >= rod.GetHookUpgradePrice() && rod.UpgradeHook())
                 {
-                    p.money -= rod.GetHookUpgradePrice();
+                    p.SpendMoney(rod.GetHookUpgradePrice()) ;
                     AudioManager.Instance.PlaySFX("Buy_Sell");
-                    RefreshMoney();
                     ShowUpgradeList();
                 }
-                else { AudioManager.Instance.PlaySFX("Error"); }
+                else { AudioManager.Instance.PlaySFX("Error", 2f); }
             }
         );
 
@@ -176,12 +172,12 @@ public class ShopUI : MonoBehaviour
             {
                 if (p.money >= rod.GetLineUpgradePrice() && rod.UpgradeLine())
                 {
-                    p.money -= rod.GetLineUpgradePrice();
+                    p.SpendMoney(rod.GetLineUpgradePrice());
                     AudioManager.Instance.PlaySFX("Buy_Sell");
-                    RefreshMoney();
                     ShowUpgradeList();
+                    
                 }
-                else { AudioManager.Instance.PlaySFX("Error"); }
+                else { AudioManager.Instance.PlaySFX("Error", 2f); }
             }
         );
 
@@ -194,12 +190,12 @@ public class ShopUI : MonoBehaviour
             {
                 if (p.money >= 1000 && inv.UpgradeBag())
                 {
-                    p.money -= 1000;
+                    p.SpendMoney(1000);
                     AudioManager.Instance.PlaySFX("Buy_Sell");
-                    RefreshMoney();
                     ShowUpgradeList();
+                    
                 }
-                else { AudioManager.Instance.PlaySFX("Error"); }
+                else { AudioManager.Instance.PlaySFX("Error", 2f); }
             }
         );
 

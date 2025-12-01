@@ -15,6 +15,11 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         panel.SetActive(false);
         DontDestroyOnLoad(gameObject);

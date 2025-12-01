@@ -76,8 +76,8 @@ public class Player : MonoBehaviour
             float weight = Random.Range(1f, 10f);
 
             Inventory.Instance.AddItem(new FishItem(data, weight));
-
-            Debug.Log($"🧪 Added Random Fish: {data.fishName} {weight}kg");
+            HUDManager.Instance.RefreshQuests();
+            Debug.Log($"🧪 Added Random Fish: {data.fishName} {weight:F1}kg");
         }
     }
 
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
 
         if (isMoving)
         {
-            rb.linearVelocity = input.normalized * moveSpeed;
+            rb.linearVelocity = new Vector2(input.x * moveSpeed, rb.linearVelocity.y);
         }
         else
         {
@@ -122,10 +122,12 @@ public class Player : MonoBehaviour
     void TryInterract()
     {
         Collider2D hit = Physics2D.OverlapCircle(transform.position, interactRange, interlactLayer);
-          
+        
+
         IInteractable interactable = hit.GetComponent<IInteractable>();
         if (interactable != null)
         {
+            HUDManager.Instance.ShowInteract(false);
             interactable.Interact(this);
         }
     }
@@ -137,11 +139,13 @@ public class Player : MonoBehaviour
         if (money < amount) return false;
 
         money -= amount;
+        HUDManager.Instance.RefreshMoney();
         return true;
     }
     public void AddMoney(int amount)
     {
         money += amount;
+        HUDManager.Instance.RefreshMoney();
     }
        
 

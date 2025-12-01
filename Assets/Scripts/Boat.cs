@@ -17,6 +17,20 @@ public class Boat : MonoBehaviour, IInteractable
     {
         fishingAreaUI.OpenUI(this);
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            HUDManager.Instance.ShowInteract(true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+            HUDManager.Instance.ShowInteract(false);
+        }
+    }
 
 
     void Update()

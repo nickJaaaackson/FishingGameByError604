@@ -15,5 +15,6 @@ MonoBehaviour:
   baitName: Worm
   icon: {fileID: 21300000, guid: 0b507a1880cf76a4b80d64ea4659b2bc, type: 3}
   baitType: 2
-  bonus: 1.1
+  bonus: 1
+  price: 10
   description: 

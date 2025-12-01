@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 6991829103828683046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.334, y: -3.638, z: 0}
+  m_LocalPosition: {x: -0.2955, y: -3.6414, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -146,7 +146,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 204c3be64b60de442942e28f0d4858fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -192,8 +192,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.2395918, y: 4.3272734}
-  m_Size: {x: 40.339912, y: 62.62989}
+  m_Offset: {x: -1.2395918, y: 3.925383}
+  m_Size: {x: 40.339912, y: 63.43367}
   m_Direction: 0
 --- !u!50 &1635588931065364342
 Rigidbody2D:
@@ -209,8 +209,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_AngularDamping: 0
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -220,7 +220,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1003152657630686158
 Animator:
@@ -259,7 +259,7 @@ MonoBehaviour:
   animator: {fileID: 1003152657630686158}
   rb: {fileID: 1635588931065364342}
   spriteRenderer: {fileID: 3581442266731188909}
-  fishingRod: {fileID: 0}
+  fishingRod: {fileID: 4549067628272797715}
   moveSpeed: 3.5
   isWalking: 0
   isCasting: 0
@@ -303,9 +303,13 @@ MonoBehaviour:
   fishMiniGamePrefab: {fileID: 8915125309785749267, guid: 2bbb0f7647b28994da2ac3fcd3bfa605, type: 3}
   miniGameParent: {fileID: 1024322761473150968}
   fishIconTemplate: {fileID: 5976231737957329483, guid: 278fcf3883054bb4da5b5064c310c48d, type: 3}
+  AlertIcon: {fileID: 587859035940674301, guid: f3098d1cd4d5cb94da2512d92ae06830, type: 3}
   fishIconScale: 0.2
   iconFloatHeight: 3
   iconFloatDuration: 1.5
+  minBiteDelay: 1
+  maxBiteDelay: 5
+  biteWindowTime: 2
 --- !u!114 &4549067628272797715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,12 +325,12 @@ MonoBehaviour:
   hookLevel: 1
   hookMaxLevel: 5
   baseHookArea: 0.2
-  hookAreaPerLevel: 0.1
+  hookAreaPerLevel: 0.05
   lineLevel: 1
   lineMaxLevel: 5
   baseTensionSpeed: 1
   tensionSpeedPerLevel: -0.1
   hookBasePrice: 100
   hookPriceIncrease: 100
-  lineBasePrice: 150
+  lineBasePrice: 151
   linePriceIncrease: 120

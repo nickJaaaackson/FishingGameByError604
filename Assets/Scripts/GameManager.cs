@@ -12,11 +12,20 @@ public class GameManager : MonoBehaviour
     public FishingAreaData[] allAreas;
 
     //private bool hasGivenStarterItem =false;
+
+    public enum FishingEvent
+    {
+        None,
+        Storm
+    }
    
     [Header("Current Game State")]
     public FishingAreaData currentArea;
-   
 
+    [Header("Fishing Event")]
+    public FishingEvent currentEvent = FishingEvent.None;
+    public bool isStorm => currentEvent == FishingEvent.Storm;
+   
     private void Awake()
     {
         SpawnPlayerIfNeeded();
@@ -36,7 +45,10 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnsceneLoaded;
     }
 
-
+    private void Update()
+    {
+        HUDManager.Instance.RefreshQuests();
+    }
     private void SpawnPlayerIfNeeded()
     {
         
@@ -44,34 +56,14 @@ public class GameManager : MonoBehaviour
 
         if (existingPlayer == null)
         {
-            Debug.Log("➡️ ไม่มี Player ในซีนนี้ กำลังสร้างใหม่");
+           
             GameObject p = Instantiate(playerPrefab);
 
             DontDestroyOnLoad(p);
         }
-        else
-        {
-            Debug.Log("✔ พบ Player แล้ว ไม่ต้องสร้างใหม่");
-        }
+        
     }
-    //private void GiveStarterItems()
-    //{
-    //    if(hasGivenStarterItem) return;
-    //    hasGivenStarterItem = true;
-
-    //    if (baitDatabase == null || baitDatabase.Count == 0)
-    //    {
-    //        Debug.LogWarning("⚠ No bait found in Resources/BaitData!");
-    //        return;
-    //    }
-
-
-    //    Inventory.Instance.AddItem(new BaitItem(baitDatabase[0], 5));
-
-    //    if (baitDatabase.Count > 1)
-    //       Inventory.Instance.AddItem(new BaitItem(baitDatabase[1], 3));
-
-    //}
+    
     private List<BaitData> baitDatabase;
 
     void LoadBaitDatabase()
@@ -84,7 +76,7 @@ public class GameManager : MonoBehaviour
         foreach (var bait in loaded)
             baitDatabase.Add(bait);
 
-        Debug.Log($"🎣 Loaded {baitDatabase.Count} baits from Resources.");
+       
     }
     private void LoadAreas()
     {
@@ -118,4 +110,23 @@ public class GameManager : MonoBehaviour
     {
         Player.Instance.SetMovementEnable(true);
     }
+    public void RollFishingEvent()
+    {
+        int roll = UnityEngine.Random.Range(0, 100);
+        if ( roll < 25 )
+        {
+            currentEvent =FishingEvent.Storm;
+
+        }
+        else
+        {
+            currentEvent = FishingEvent.None;
+        }
+    }
+    public void MoreMoney()
+    {
+        Player.Instance.AddMoney(1000);
+        AudioManager.Instance.PlaySFX("Buy_Sell");
+    }
+
 }

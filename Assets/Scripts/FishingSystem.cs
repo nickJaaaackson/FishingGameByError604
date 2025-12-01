@@ -11,6 +11,7 @@ public class FishingSystem : MonoBehaviour
 
     [Header("UI Prefabs")]
     [SerializeField] private GameObject fishIconTemplate;
+    [SerializeField] private GameObject AlertIcon;
     [SerializeField] private float fishIconScale = 0.2f;
     [SerializeField] private float iconFloatHeight = 3f;
     [SerializeField] private float iconFloatDuration = 1.5f;
@@ -73,13 +74,11 @@ public class FishingSystem : MonoBehaviour
             return;
         }
 
-        // ---------------------------
-        //  เลือกปลาก่อน
-        // ---------------------------
+        
         FishData fishToCatch = TryCatchFish(area, bait);
         if (fishToCatch == null)
         {
-            Debug.Log("🐟 No fish took the bait...");
+            Debug.Log(" No fish took the bait...");
             player.UnfreezeAfterFishing();
             return;
         }
@@ -100,9 +99,16 @@ public class FishingSystem : MonoBehaviour
     private void StartBiteProcess(Player player)
     {
         phase = FishingPhase.WaitingBite;
-        biteDelayTimer = Random.Range(minBiteDelay, maxBiteDelay);
+        if (GameManager.Instance.isStorm)
+        {
+            biteDelayTimer = Random.Range(5f, 10f);
+        }
+        else
+        {
+            biteDelayTimer = Random.Range(minBiteDelay, maxBiteDelay);
+        }
 
-        Debug.Log($"🎣 รอปลากิน... {biteDelayTimer:0.0} วิ");
+        Debug.Log($" รอปลากิน... {biteDelayTimer:0.0} วิ");
 
       
         
@@ -121,6 +127,7 @@ public class FishingSystem : MonoBehaviour
                     biteWindowTimer = biteWindowTime;
 
                     AudioManager.Instance.PlaySFX("FishBite");
+                    ShowAlertIcon();
                 }
                 break;
 
@@ -129,7 +136,7 @@ public class FishingSystem : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("🎣 เกี่ยวทัน! เข้ามินิเกม");
+                    Debug.Log(" เกี่ยวทัน! เข้ามินิเกม");
 
                     phase = FishingPhase.MiniGame;
                     StartMiniGameFromPending();
@@ -137,7 +144,7 @@ public class FishingSystem : MonoBehaviour
                 else if (biteWindowTimer <= 0)
                 {
                     Debug.Log("❌ กดไม่ทัน! ปลาหลุด");
-
+                    ConsumeBait(usingBait);
                     phase = FishingPhase.Idle;
                     Player.Instance.UnfreezeAfterFishing();
                 }
@@ -152,7 +159,7 @@ public class FishingSystem : MonoBehaviour
     {
         if (cachedFish == null)
         {
-            Debug.LogWarning("❌ cachedFish หาย");
+            Debug.LogWarning(" cachedFish หาย");
             Player.Instance.UnfreezeAfterFishing();
             return;
         }
@@ -165,7 +172,7 @@ public class FishingSystem : MonoBehaviour
 
         activeMiniGame.StartMiniGame(cachedFish, Player.Instance, this, cachedWeight);
 
-        Debug.Log($"🎮 MiniGame: {cachedFish.fishName} ({cachedWeight:F2}kg)");
+        Debug.Log($" MiniGame: {cachedFish.fishName} ({cachedWeight:F2}kg)");
     }
 
 
@@ -250,7 +257,22 @@ public class FishingSystem : MonoBehaviour
             float chance = fish.biteChance;
             if (fish.preferredBaits.Contains(currentBait))
                 chance *= currentBait.bonus;
+            if(GameManager.Instance.currentEvent == GameManager.FishingEvent.Storm)
+            {
+                switch(fish.rarity)
+                {
+                    case Rarity.Rare:
+                        chance *= 1.30f;
+                            break;
+                    case Rarity.Epic:
+                        chance *= 1.50f;
+                            break;
+                    case Rarity.Legendary:
+                        chance *= 2.00f;
+                        break;
 
+                }
+            }
             weighted.Add(fish, chance);
             totalChance += chance;
         }
@@ -334,5 +356,12 @@ public class FishingSystem : MonoBehaviour
 
         Destroy(icon);
     }
+    public void ShowAlertIcon()
+    {
+        Vector3 spawnPos =transform.position + new Vector3(0, 0.9f, 0);
+        GameObject icon = Instantiate(AlertIcon, spawnPos, Quaternion.identity);
+        Destroy(icon,1f);
+    }
+
     #endregion
 }

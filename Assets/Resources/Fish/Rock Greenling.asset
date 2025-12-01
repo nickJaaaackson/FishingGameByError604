@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rock Greenling
   m_EditorClassIdentifier: 
   fishName: Rock Greenling
-  icon: {fileID: 21300000, guid: 8a7444ea19d118941ba2c21dcdde3213, type: 3}
+  icon: {fileID: 21300000, guid: 44a8d8647dbefc14a86bf83d97a6beb4, type: 3}
   minWeight: 0.6
   maxWeight: 3
   pricePerKg: 15

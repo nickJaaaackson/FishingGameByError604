@@ -17,7 +17,7 @@ public class FishingArea : MonoBehaviour
 
         SceneManager.LoadScene(area.sceneName);
         AudioManager.Instance.PlaySFX("travel",0.4f);
-        // ส่งข้อมูลไป GameManager หลังโหลดเสร็จ
+       
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -25,5 +25,17 @@ public class FishingArea : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         GameManager.Instance.SetCurrentArea(selectedArea);
+        if(scene.name != "Dock")
+        {
+            GameManager.Instance.RollFishingEvent();
+            if(GameManager.Instance.currentEvent==GameManager.FishingEvent.Storm)
+            {
+                HUDManager.Instance.ShowEvent("To day is Raining!!!",Color.red);
+            }
+        }
+        else
+        {
+            GameManager.Instance.currentEvent = GameManager.FishingEvent.None;
+        }
     }
 }

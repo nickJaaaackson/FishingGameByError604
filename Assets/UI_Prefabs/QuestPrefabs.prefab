@@ -313,15 +313,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Acept/Submit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278252031
-  m_fontColor: {r: 1, g: 0.94471574, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -338,8 +338,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -587,8 +587,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Catch Common fish
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -723,8 +723,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: More
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -859,8 +859,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Warm-Up Challenge
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1092,8 +1092,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: " 3 \xD7 "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1228,15 +1228,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100 g
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a79374384791d654b8b4daf877bf6910, type: 2}
+  m_sharedMaterial: {fileID: 6966547721575542707, guid: a79374384791d654b8b4daf877bf6910, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279887615
+  m_fontColor: {r: 1, g: 0.90068, b: 0.0990566, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

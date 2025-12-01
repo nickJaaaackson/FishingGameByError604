@@ -25,6 +25,21 @@ public class Shop : MonoBehaviour, IInteractable
     {
         baitList = new List<BaitData>(Resources.LoadAll<BaitData>("Bait"));
         shopUI.InitTabs(this);
+
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            HUDManager.Instance.ShowInteract(true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            HUDManager.Instance.ShowInteract(false);
+        }
     }
 
     //=============================================
@@ -59,25 +74,25 @@ public class Shop : MonoBehaviour, IInteractable
 
         if (Player.Instance.money < price)
         {
-            AudioManager.Instance.PlaySFX("Error");
+            AudioManager.Instance.PlaySFX("Error", 2f);
             return;
         }
 
-        Player.Instance.money -= price;
+        Player.Instance.SpendMoney(price);
         Inventory.Instance.AddItem(new BaitItem(bait, 1));
         AudioManager.Instance.PlaySFX("Buy_Sell");
-        shopUI.RefreshMoney();
+        
     }
 
     public void SellFish(FishItem fish)
     {
         float price = fish.GetSellPrice();
-        Player.Instance.money += Mathf.FloorToInt(price);
+        Player.Instance.AddMoney(Mathf.FloorToInt(price));
         AudioManager.Instance.PlaySFX("Buy_Sell");
         Inventory.Instance.RemoveItem(fish);
 
         shopUI.ShowSellList();
-        shopUI.RefreshMoney();
+       
     }
 
     //=============================================

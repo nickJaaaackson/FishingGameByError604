@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348e7fd194e569f48ba04f5aea0db36a, type: 3}
+  m_Name: GiantTrevally
+  m_EditorClassIdentifier: 
+  fishName: GiantTrevally
+  icon: {fileID: 21300000, guid: 8dcf1182150975a4099814f76f27d7c3, type: 3}
+  minWeight: 80
+  maxWeight: 90
+  pricePerKg: 8
+  rarity: 4
+  biteChance: 0.07
+  eatType: 1
+  preferredBaits:
+  - {fileID: 11400000, guid: aff485bafde5e84439b44e6e19b8818e, type: 2}
+  - {fileID: 11400000, guid: 64dfab965bcd1084da0a2dc62dcdadf2, type: 2}
+  - {fileID: 11400000, guid: e5ab09f173cb4fd43957dbb14bd31e8c, type: 2}

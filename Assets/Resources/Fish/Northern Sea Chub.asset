@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: f81c955be385f0e43aee32eb9c50c6b3, type: 3}
   minWeight: 0.8
   maxWeight: 4.5
-  pricePerKg: 28
+  pricePerKg: 10
   rarity: 1
   biteChance: 0.55
   eatType: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Kelp Greenling
   m_EditorClassIdentifier: 
   fishName: Kelp Greenling
-  icon: {fileID: 21300000, guid: 8a7444ea19d118941ba2c21dcdde3213, type: 3}
+  icon: {fileID: 21300000, guid: 410f512fc77ea1f4f89f2ab490d1f006, type: 3}
   minWeight: 0.6
   maxWeight: 2.4
   pricePerKg: 15

@@ -15,5 +15,6 @@ MonoBehaviour:
   baitName: Seaweed
   icon: {fileID: 21300000, guid: 62c3989810c348d4fbba6e657a088a6d, type: 3}
   baitType: 0
-  bonus: 1.4
+  bonus: 1.2
+  price: 20
   description: 

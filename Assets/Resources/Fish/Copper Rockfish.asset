@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Copper Rockfish
   m_EditorClassIdentifier: 
   fishName: Copper Rockfish
-  icon: {fileID: 21300000, guid: 1de22622e2a1d5f4eb6e6969361692a1, type: 3}
+  icon: {fileID: 21300000, guid: 5a3bba353f1052a428fde226ac7075eb, type: 3}
   minWeight: 1
   maxWeight: 3
-  pricePerKg: 30
+  pricePerKg: 15
   rarity: 1
   biteChance: 0.45
   eatType: 1
   preferredBaits:
   - {fileID: 11400000, guid: 2d936800006a1c34aa7b449be48cffe1, type: 2}
+  - {fileID: 11400000, guid: 64dfab965bcd1084da0a2dc62dcdadf2, type: 2}

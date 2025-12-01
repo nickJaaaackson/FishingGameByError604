@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
         if (items.Count < maxSlots)
         {
             items.Add(item);
+            HUDManager.Instance.RefreshQuests();
         }
         else
         {

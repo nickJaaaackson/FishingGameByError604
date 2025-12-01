@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wolf Eel
   m_EditorClassIdentifier: 
   fishName: Wolf Eel
-  icon: {fileID: 21300000, guid: 8a7444ea19d118941ba2c21dcdde3213, type: 3}
+  icon: {fileID: 21300000, guid: 28bf661e759437748a155406b22f57cb, type: 3}
   minWeight: 6
   maxWeight: 18
   pricePerKg: 15
@@ -22,4 +22,5 @@ MonoBehaviour:
   eatType: 2
   preferredBaits:
   - {fileID: 11400000, guid: 6d05a48fe6d16634d9fabd09e7f80d98, type: 2}
-  - {fileID: 11400000, guid: 2d936800006a1c34aa7b449be48cffe1, type: 2}
+  - {fileID: 11400000, guid: 64dfab965bcd1084da0a2dc62dcdadf2, type: 2}
+  - {fileID: 11400000, guid: e5ab09f173cb4fd43957dbb14bd31e8c, type: 2}

@@ -93,6 +93,7 @@ public class QuestSystem : MonoBehaviour
         {
             activeQuests.Add(q);
             Debug.Log("Accepted quest: " + q.questName);
+            HUDManager.Instance.RefreshQuests();
         }
     }
     #endregion
@@ -129,6 +130,41 @@ public class QuestSystem : MonoBehaviour
         return false;
     }
 
+
+   public string GetProgressText(QuestData quest)
+    {
+        var inv = Inventory.Instance.items;
+        switch (quest.type)
+        {
+            case QuestType.CatchSpecificFish:
+                int count = 0;
+                foreach(var item in inv)
+                    if(item is FishItem f && f.fishData == quest.targetFish)
+                        count++;
+                count = Mathf.Min(count, quest.targetAmount);
+                return $"{count}/{quest.targetAmount}";
+
+            case QuestType.CatchTotalWeight:
+                float totalW = 0f;
+                foreach (var item in inv)
+                {
+                    if (item is FishItem f2)
+                        totalW += f2.weight;
+                }
+                totalW = Mathf.Min(totalW, quest.targetWeight);
+                return $"{totalW:F1}/{quest.targetWeight}";
+
+            case QuestType.CatchByRarity:
+                int rarCount = 0;
+                foreach (var item in inv)
+                    if (item is FishItem f3 && f3.fishData.rarity == quest.targetRarity)
+                        rarCount++;
+                rarCount = Mathf.Min(rarCount, quest.targetRarityAmount);
+                return $"{rarCount}/{quest.targetRarityAmount}";
+        }
+        return "";
+    }
+
     public void SubmitQuest(QuestData quest)
     {
         if (!CheckQuestProgress(quest))
@@ -139,8 +175,9 @@ public class QuestSystem : MonoBehaviour
 
         RemoveFishForQuest(quest);
 
-        Player.Instance.money += quest.rewardMoney;
+        Player.Instance.AddMoney(quest.rewardMoney);
         activeQuests.Remove(quest);
+        HUDManager.Instance.RefreshQuests();
 
         // ดึงคิวถัดไป
         switch (quest.type)
